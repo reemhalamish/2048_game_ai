@@ -5,8 +5,7 @@ Created on 14 april 2015
 from tkinter import *
 from tile import Tile
 from game import *
-from tkinter.font import BOLD
-
+from random import choice as choose_uni_from_seq
 SIZE_OF_WINDOW = 4 * SIZE_OF_ONE_TILE
 FREE_TO_MOVE = True
 class GUI(Frame):
@@ -26,14 +25,10 @@ class GUI(Frame):
         self.canvas = Canvas(master, width=SIZE_OF_WINDOW, height=SIZE_OF_WINDOW)
         self.draw_grid()
         
-        self.create_new_tile(1, 0)
-        self.create_new_tile(2, 1)
-        self.create_new_tile(1, 3)
-        self.debug_board()
-        self.update_turn(Directions.SOUTH)
-        self.debug_board()
-        self.update_turn(Directions.WEST)
-        self.debug_board()
+        # bind keys and functions
+        self.master.bind('<Key>', self.key_pressed)
+
+        self.before_turn()
 
     def draw_grid(self):
         c = self.canvas
@@ -48,6 +43,25 @@ class GUI(Frame):
         tile = Tile(self.canvas, x, y, value)
         self.board[x][y] = tile
         tile.draw()
+        
+    def before_turn(self):
+        board = self.board
+        # 1. get all the empty slots and choose randomly between them
+        # 2. choose randomly(0.8) between putting 2 or 4 there
+        emptySlots = [(x,y) for x in range(4) for y in range(4) if board[x][y] == None]
+        numberToPutInSlot = (2,2,2,2,4)
+        if len(emptySlots) == 0:
+            print("Game Over!")
+            self.master.destroy()
+            return
+        x,y = choose_uni_from_seq(emptySlots)
+        chosenNumber = choose_uni_from_seq(numberToPutInSlot)
+        newTile = Tile(self.canvas, x, y, chosenNumber)
+        newTile.draw()
+        board[x][y] = newTile
+        
+        
+        
     def update_turn(self, direction):
         ''' moving all the tiles '''
         dx,dy = Directions.dxdy[direction]
@@ -55,19 +69,17 @@ class GUI(Frame):
             for line in self.board:
                 for tile in line:
                     self.move_tile(tile, direction)
-        elif direction == Directions.EAST:
-            for line in self.board:
-                for tile in reversed(line):
-                    self.move_tile(tile, direction)
-        elif direction == Directions.SOUTH:
+        elif direction == Directions.EAST or direction == Directions.SOUTH:
             for line in reversed(self.board):
-                for tile in line:
+                for tile in reversed(line):
                     self.move_tile(tile, direction)
                     
         for line in self.board:
             for tile in line:
                 if not tile == None:
                     tile.end_of_turn()
+                    
+        self.before_turn()
     
     def move_tile(self, tile, direction):
         if tile == None:
@@ -113,6 +125,23 @@ class GUI(Frame):
             for tile in line:
                 if tile:
                     tile.draw()
+                    
+    def key_pressed(self, event):
+        print ("HERE")
+        if event.keysym == 'Escape':
+            self.master.destroy()
+        elif event.keysym == 'q':
+            self.master.destroy()
+        elif event.keysym == 'Right':
+            self.update_turn(Directions.EAST)
+        elif event.keysym == 'Left':
+            self.update_turn(Directions.WEST)
+        elif event.keysym == 'Up':
+            self.update_turn(Directions.NORTH)
+        elif event.keysym == 'Down':
+            self.update_turn(Directions.SOUTH)
+
+
     def debug_board(self):
         b = self.board
         for y in range(4):
