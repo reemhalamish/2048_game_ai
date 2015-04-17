@@ -12,6 +12,7 @@ def main():
     root.title("2048")
     root.resizable(width=False, height=False)
     gui = GUI(root)
+    root.focus()
     root.mainloop()
 
 if __name__ == '__main__':

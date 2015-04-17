@@ -10,7 +10,16 @@ class Tile():
     '''
     represent one tile in the board
     '''
-
+    
+    #  x==y calls x.__eq__(y), x!=y calls x.__ne__(y)
+    def __eq__(self, other):
+        return (other != None) and other.__class__ == self.__class__ and other.value == self.value
+    
+    def __ne__(self, other):
+        return not self.__eq__(other)
+    
+    def __int__(self):
+        return self.value
 
     def __init__(self, canvas, x, y,value = 2, meragble = True):
         '''
@@ -40,6 +49,9 @@ class Tile():
     
     def getXY(self):
         return self.x, self.y
+    
+    def getValue(self):
+        return self.value
     
     def __update_drawing(self, x = None, y = None):
         self.erase()

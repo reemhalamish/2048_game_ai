@@ -56,14 +56,74 @@ class GUI(Frame):
             return
         x,y = choose_uni_from_seq(emptySlots)
         chosenNumber = choose_uni_from_seq(numberToPutInSlot)
-        newTile = Tile(self.canvas, x, y, chosenNumber)
-        newTile.draw()
-        board[x][y] = newTile
+        self.create_new_tile(x, y, chosenNumber)
         
+    def is_legal_turn(self, direction, board = None):
+#         print("at", direction)
+#         print("line is:", line, "(should be reversed) reading")
+# print("found", tile, "after none!")
+        mergeOk = lambda x,y : x != None and y != None and x == y
+        if not board:
+            board = self.board
+        # first of all - if there are two close tiles that can be attached - it's a legal turn
+        if direction == Directions.NORTH or direction == Directions.SOUTH:
+            for line in board:
+                tile0, tile1, tile2, tile3 = line
+                if mergeOk(tile0,tile1) \
+                or mergeOk(tile1, tile2) \
+                or mergeOk(tile2,tile3):
+                    return True
+        if direction == Directions.WEST or direction == Directions.EAST:
+            for tile0, tile1, tile2, tile3 in zip(board[0], board[1], board[2], board[3]):
+                if mergeOk(tile0,tile1) \
+                or mergeOk(tile1, tile2) \
+                or mergeOk(tile2,tile3):
+                    return True
+
+        # secondly - check for instances of empty tiles right before other tiles
+        if direction == Directions.WEST:
+            for line in zip(board[0], board[1], board[2], board[3]):
+                foundNone = False
+                for tile in line:
+                    if tile == None:
+                        foundNone = True
+                    elif foundNone: # there is a tile after a None - it will move! so this turn is good
+                        return True
+        elif direction == Directions.EAST:# or direction == Directions.SOUTH:
+            for line in zip(board[0], board[1], board[2], board[3]):
+                foundNone = False
+                for tile in reversed(line):
+                    if tile == None:
+                        foundNone = True
+                    elif foundNone: # there is a tile after a None - it will move! so this turn is good
+                        return True
+        elif direction == Directions.NORTH:
+            for tur in board:
+                foundNone = False
+                for tile in tur:
+                    if tile == None:
+                        foundNone = True
+                    elif foundNone: # there is a tile after a None - it will move! so this turn is good
+                        return True
+        elif direction == Directions.SOUTH:
+            for tur in board:
+                foundNone = False
+                for tile in reversed(tur):
+                    if tile == None:
+                        foundNone = True
+                    elif foundNone: # there is a tile after a None - it will move! so this turn is good
+                        return True
         
-        
+        # reached here? sign that you haven't found anything
+        return False
+            
     def update_turn(self, direction):
         ''' moving all the tiles '''
+        
+        if not self.is_legal_turn(direction):
+            print("not legal!")
+            return
+        
         dx,dy = Directions.dxdy[direction]
         if direction == Directions.WEST or direction == Directions.NORTH:
             for line in self.board:
@@ -126,8 +186,21 @@ class GUI(Frame):
                 if tile:
                     tile.draw()
                     
+    def restart_board(self):
+        self.board = [[None for i in range(4)] for j in range(4)]
+    
+    def create_from_list(self, board):
+        x, y = 0,0
+        self.restart_board()
+        for tile in board:
+            if tile != None and tile != 0:
+                self.create_new_tile(x, y, int(tile))
+            x += 1
+            if x == 4:
+                y += 1
+                x = 0
+                    
     def key_pressed(self, event):
-        print ("HERE")
         if event.keysym == 'Escape':
             self.master.destroy()
         elif event.keysym == 'q':
@@ -152,3 +225,11 @@ class GUI(Frame):
                     print("-", end = " ")
             print()
         print("****************************")
+        
+    def debug_legal_turn(self):
+        self.create_from_list([0,0,0,0,2,4,2,4])
+        self.debug_board()
+        for d in Directions.generator():
+            print(d, self.is_legal_turn(d))
+        
+        

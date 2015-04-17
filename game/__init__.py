@@ -12,3 +12,12 @@ class Directions:
             EAST  : (1,0),
             WEST  : (-1,0)
             }
+    
+    @staticmethod
+    def generator():
+        yield Directions.NORTH
+        yield Directions.EAST
+        yield Directions.SOUTH
+        yield Directions.WEST
+        
+        
