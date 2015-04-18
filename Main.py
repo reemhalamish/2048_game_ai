@@ -6,13 +6,15 @@ Created on 14 april 2015
 
 from gui import GUI
 import tkinter
+from ai import ExpectimaxAgent
 
 def main():
+    Agent = ExpectimaxAgent()
     root = tkinter.Tk()
     root.title("2048")
     root.resizable(width=False, height=False)
-    gui = GUI(root)
-    root.focus()
+    gui = GUI(root, agent=Agent)
+    gui.focus()
     root.mainloop()
 
 if __name__ == '__main__':
@@ -21,5 +23,5 @@ if __name__ == '__main__':
     
 '''
 TODO:
-check the option - can't move x if all blocks are already in x!
+the AI is REALLY slow, how can I upgrade it?
 '''
