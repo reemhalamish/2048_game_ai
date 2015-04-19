@@ -75,7 +75,7 @@ class GUI(Frame):
             self.display_score_and_exit()
             
         if self.agent:
-            self.update_turn(self.agent.getAction(self.board))
+            self.after(AFTER_FOR_NEW_TURN, self.update_turn, self.agent.getAction(self.board))
         
         self.ignoreKeys = False
         
@@ -250,9 +250,9 @@ class GUI(Frame):
         for y in range(4):
             for x in range(4):
                 if b[x][y]:
-                    print(b[x][y], end = " "* (4 - len(str((b[x][y])))))
+                    print(b[x][y], end = " "* (6 - len(str((b[x][y])))))
                 else:
-                    print("-", end = " "*3)
+                    print("-", end = " "*5)
             print()
         print("****************************")
         

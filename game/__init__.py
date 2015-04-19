@@ -1,9 +1,9 @@
 from random import uniform
 SIZE_OF_ONE_TILE = 100
-path_for_images = {2**i : "pic/"+str(2**i)+".png" for i in range(1,14)}
 CHANCE_FOR_TWO_OR_FOUR = ((2,9), (4,1))
 PROB_FOR_TWO_NORMALIZED = CHANCE_FOR_TWO_OR_FOUR[0][1] / (CHANCE_FOR_TWO_OR_FOUR[0][1] + CHANCE_FOR_TWO_OR_FOUR[1][1])
-AFTER_FOR_NEW_TURN = 500 # TODO: only 50 is good
+AFTER_FOR_NEW_TURN = 50
+path_for_images = {2**i : "pic/"+str(2**i)+".png" for i in range(1,14)}
 
 def weighted_choice(choices = CHANCE_FOR_TWO_OR_FOUR):
     total = sum(w for c, w in choices)

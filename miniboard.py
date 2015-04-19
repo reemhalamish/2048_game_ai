@@ -4,6 +4,10 @@ Created on 18 April 2015
 @author: Reem
 '''
 from game import Directions, PROB_FOR_TWO_NORMALIZED
+tileIsInBoundaries = lambda x,y : (x >= 0 and x <= 3) and (y >= 0 and y <= 3)
+tilesCanMerge = lambda t,T : t != None and T != None and t == T
+mergeOk = lambda x,y : x != None and y != None and x == y
+
 
 
 class Miniboard():
@@ -41,7 +45,6 @@ class Miniboard():
 
     @staticmethod
     def isLegalAction(board, direction):
-        mergeOk = lambda x,y : x != None and y != None and x == y
         # first of all - if there are two close tiles that can be attached - it's a legal turn
         if direction == Directions.NORTH or direction == Directions.SOUTH:
             for line in board:
@@ -121,8 +124,6 @@ class Miniboard():
             return
         tx, ty = prevX, prevY
         dx, dy = Directions.dxdy[direction]
-        tileIsInBoundaries = lambda x,y : (x >= 0 and x <= 3) and (y >= 0 and y <= 3)
-        tilesCanMerge = lambda t,T : t != None and T != None and t == T
         
         # gravity: move along all the empty tiles
         while (tileIsInBoundaries(tx + dx, ty+dy) and board[tx + dx][ty+dy] == None):
@@ -145,6 +146,46 @@ class Miniboard():
             else: # treat like a boundary
                 board[prevX][prevY] = None
                 board[tx][ty] = tile
+                
+    @staticmethod
+    def generator(board):
+        ''' the generator yields the tiles by tuples - (tile, x, y) '''
+        for x in range(4):
+            for y in range(4):
+                yield (board[x][y], x, y)
+    
+    @staticmethod
+    def Max(board):
+        ''' returns the maximum tile by a tuple - (tile, x, y) '''
+        max = xret = yret = 0
+        
+        for x in range(4):
+            for y in range(4):
+                tile = board[x][y]
+                if tile != None:
+                    if tile > max:
+                        max, xret, yret = tile, x, y
+        return (max, xret, yret)
+                        
+    @staticmethod
+    def find_all_accurences(board, number):
+        # TODO: "mofaim" in english is ... ?
+        ''' given a number, finding all of it's acurrences. returning a generator ((x1,y1), ... )'''
+        
+        for tile, x, y in Miniboard.generator(board):
+            if tile != None and tile == number:
+                yield (x,y)
+    
+    @staticmethod
+    def sort_board_by_highest_number(board):
+        ''' read the name ^ '''
+        f = lambda tile : tile[0] if tile[0] != None else 0
+        # from the documents: 
+        # The value of the key parameter should be a function 
+        # that takes a single argument and returns a key to use for sorting purposes.
+        return sorted(Miniboard.generator(board), key = f)
+            
+        
 
     @staticmethod
     def getNextStatesForRandomPlacements(board):
@@ -182,9 +223,9 @@ class Miniboard():
         for y in range(4):
             for x in range(4):
                 if board[x][y]:
-                    print(board[x][y], end = " "* (4 - len(str((board[x][y])))))
+                    print(board[x][y], end = " "* (6 - len(str((board[x][y])))))
                 else:
-                    print("-", end = " "*3)
+                    print("-", end = " "*5)
             print()
         print("****************************")
         
@@ -209,3 +250,9 @@ def test_miniboard():
         m.debug_board(b[1])
 if __name__ == '__main__':
             test_miniboard()
+            
+'''
+ TODO:
+ 
+ maybe if I will move it from None to 0 it will be faster because there will be no tests!
+'''
