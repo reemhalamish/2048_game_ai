@@ -25,5 +25,10 @@ if __name__ == '__main__':
 TODO:
 at depth=3 the AI is REALLY slow, how can I upgrade it?
 more heuristics:
-* for every tile, search the tile*2 and grant bonuses for closer (i.e. 16,32, 2, 4) os better then (16, 2, 4, 32)
+* consider something like that:
+[1024, 512, 256, 4]
+[256,  4,   2,   4]
+[.................]
+[.................]
+manDistance between equal tiles?
 '''

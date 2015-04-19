@@ -4,9 +4,10 @@ Created on 18 April 2015
 @author: Reem
 '''
 from game import Directions, PROB_FOR_TWO_NORMALIZED
+from itertools import count
 tileIsInBoundaries = lambda x,y : (x >= 0 and x <= 3) and (y >= 0 and y <= 3)
-tilesCanMerge = lambda t,T : t != None and T != None and t == T
-mergeOk = lambda x,y : x != None and y != None and x == y
+tilesCanMerge = lambda t,T : t != 0 and T != 0 and t == T
+mergeOk = lambda x,y : x != 0 and y != 0 and x == y
 
 
 
@@ -21,7 +22,7 @@ class Miniboard():
         Constructor
         '''
         self.score = 0
-        self.board = self.board = [[None for i in range(4)] for j in range(4)]
+        self.board = self.board = [[0 for i in range(4)] for j in range(4)]
         Miniboard.debug_board(self.board)
         x, y = 0,0
         for tile in tilesAsList:
@@ -65,7 +66,7 @@ class Miniboard():
             for line in zip(board[0], board[1], board[2], board[3]):
                 foundNone = False
                 for tile in line:
-                    if tile == None:
+                    if tile == 0:
                         foundNone = True
                     elif foundNone: # there is a tile after a None - it will move! so this turn is good
                         return True
@@ -73,7 +74,7 @@ class Miniboard():
             for line in zip(board[0], board[1], board[2], board[3]):
                 foundNone = False
                 for tile in reversed(line):
-                    if tile == None:
+                    if tile == 0:
                         foundNone = True
                     elif foundNone: # there is a tile after a None - it will move! so this turn is good
                         return True
@@ -81,7 +82,7 @@ class Miniboard():
             for tur in board:
                 foundNone = False
                 for tile in tur:
-                    if tile == None:
+                    if tile == 0:
                         foundNone = True
                     elif foundNone: # there is a tile after a None - it will move! so this turn is good
                         return True
@@ -89,7 +90,7 @@ class Miniboard():
             for tur in board:
                 foundNone = False
                 for tile in reversed(tur):
-                    if tile == None:
+                    if tile == 0:
                         foundNone = True
                     elif foundNone: # there is a tile after a None - it will move! so this turn is good
                         return True
@@ -113,20 +114,19 @@ class Miniboard():
         # move_tile() changed merged tiles - i.e. from (4) to (-4) so we need to flip it 
         for x in range(4):
                 for y in range(4):
-                    if board[x][y] != None:
-                        board[x][y] = abs(board[x][y])
+                    board[x][y] = abs(board[x][y])
         return board
                     
     @staticmethod
     def move_tile(prevX, prevY, direction, board):
         tile = board[prevX][prevY]
-        if tile == None:
+        if tile == 0:
             return
         tx, ty = prevX, prevY
         dx, dy = Directions.dxdy[direction]
         
         # gravity: move along all the empty tiles
-        while (tileIsInBoundaries(tx + dx, ty+dy) and board[tx + dx][ty+dy] == None):
+        while (tileIsInBoundaries(tx + dx, ty+dy) and board[tx + dx][ty+dy] == 0):
             tx += dx
             ty += dy
         
@@ -134,7 +134,7 @@ class Miniboard():
         
         # if with the boundary - save and exit
         if (not tileIsInBoundaries(tx + dx, ty+dy)):
-            board[prevX][prevY] = None
+            board[prevX][prevY] = 0
             board[tx][ty] = tile
         # else - collision with another. check if can merge
         else:
@@ -142,30 +142,30 @@ class Miniboard():
             if tilesCanMerge(tile,anotherTile):
                 anotherTile *= -2
                 board[tx+dx][ty+dy] = anotherTile
-                board[prevX][prevY] = None
+                board[prevX][prevY] = 0
             else: # treat like a boundary
-                board[prevX][prevY] = None
+                board[prevX][prevY] = 0
                 board[tx][ty] = tile
                 
     @staticmethod
     def generator(board):
-        ''' the generator yields the tiles by tuples - (tile, x, y) '''
+        ''' the generator yields only non-empty tiles by tuples - (tile, x, y) '''
         for x in range(4):
             for y in range(4):
-                yield (board[x][y], x, y)
+                if board[x][y]:
+                    yield (board[x][y], x, y)
     
     @staticmethod
     def Max(board):
         ''' returns the maximum tile by a tuple - (tile, x, y) '''
-        max = xret = yret = 0
+        maxTile = xret = yret = 0
         
         for x in range(4):
             for y in range(4):
                 tile = board[x][y]
-                if tile != None:
-                    if tile > max:
-                        max, xret, yret = tile, x, y
-        return (max, xret, yret)
+                if tile > maxTile:
+                    maxTile, xret, yret = tile, x, y
+        return (maxTile, xret, yret)
                         
     @staticmethod
     def find_all_accurences(board, number):
@@ -173,24 +173,31 @@ class Miniboard():
         ''' given a number, finding all of it's acurrences. returning a generator ((x1,y1), ... )'''
         
         for tile, x, y in Miniboard.generator(board):
-            if tile != None and tile == number:
+            if tile == number:
                 yield (x,y)
     
     @staticmethod
     def sort_board_by_highest_number(board):
         ''' read the name ^ '''
-        f = lambda tile : tile[0] if tile[0] != None else 0
+        f = lambda tile : tile[0]
         # from the documents: 
         # The value of the key parameter should be a function 
         # that takes a single argument and returns a key to use for sorting purposes.
-        return sorted(Miniboard.generator(board), key = f)
+        return sorted(Miniboard.generator(board), key = f, reverse=True)
             
         
+    @staticmethod
+    def countEmptyTiles(board):
+        counter = 16
+        for tile in Miniboard.generator(board):
+            counter -= 1
+        return counter
+            
 
     @staticmethod
     def getNextStatesForRandomPlacements(board):
         ''' gets a state - a board - and yields tuples (probability, nextState) '''
-        emptySlots = [(x,y) for x in range(4) for y in range(4) if board[x][y] == None]
+        emptySlots = [(x,y) for x in range(4) for y in range(4) if board[x][y] == 0]
         if not emptySlots:
             return None
             # game over
@@ -236,6 +243,8 @@ class Miniboard():
             for x in range(4):
                 if board[x][y] != None:
                     retval[x][y] = int(board[x][y])
+                else:
+                    retval[x][y] = 0
         return retval
         
 def test_miniboard():
