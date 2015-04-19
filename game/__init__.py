@@ -2,7 +2,7 @@ from random import uniform
 SIZE_OF_ONE_TILE = 100
 CHANCE_FOR_TWO_OR_FOUR = ((2,9), (4,1))
 PROB_FOR_TWO_NORMALIZED = CHANCE_FOR_TWO_OR_FOUR[0][1] / (CHANCE_FOR_TWO_OR_FOUR[0][1] + CHANCE_FOR_TWO_OR_FOUR[1][1])
-AFTER_FOR_NEW_TURN = 50
+AFTER_FOR_NEW_TURN = 1
 path_for_images = {2**i : "pic/"+str(2**i)+".png" for i in range(1,14)}
 CORNERS = ((0,0), (0,3), (3,0), (3,3))
 BOUNDARYx0 = tuple([(i, 0) for i in range(4)] )
@@ -19,6 +19,10 @@ def weighted_choice(choices = CHANCE_FOR_TWO_OR_FOUR):
             return c
         upto += w
     assert False, "Shouldn't get here"
+
+def flipping30(input):
+    ''' flip 0x3 , 1x2 '''
+    return (3-i for i in input)
 
 class Directions:
     NORTH = 'North'

@@ -2,6 +2,7 @@
 Created on 14 april 2015
 @author: Reem
 '''
+from miniboard import Miniboard
 from tkinter import Frame, Canvas
 from tile import Tile
 from game import AFTER_FOR_NEW_TURN, Directions, SIZE_OF_ONE_TILE, weighted_choice
@@ -30,6 +31,7 @@ class GUI(Frame):
         # bind keys and functions
         self.master.bind('<Key>', self.key_pressed)
 
+#         self.test_heuristics()
         self.after(AFTER_FOR_NEW_TURN, self.before_turn)
 
     def create_from_list(self, boardAsList):
@@ -140,7 +142,7 @@ class GUI(Frame):
         ''' moving all the tiles '''
         
         if not self.is_legal_turn(direction):
-            print("not legal!")
+#             print("not legal!")
             return
         
         if direction == Directions.WEST or direction == Directions.NORTH:
@@ -216,13 +218,14 @@ class GUI(Frame):
     
                     
     def display_score_and_exit(self):
-        print("Game over! your score:",self.score)
-        print("you have about 10 seconds to review the game")
-        TEN_SEC_UNTIL_EXIT = 10000 
+#         print("Game over! your score:",self.score)
+#         print("you have about 10 seconds to review the game")
+        TEN_SEC_UNTIL_EXIT = 1000 
         self.after(TEN_SEC_UNTIL_EXIT, self.exit_fast)
     
     def exit_fast(self):
-        self.debug_board()
+        self.printTilesSorted()
+#         self.debug_board()
         self.master.destroy()
     
     def key_pressed(self, event):
@@ -256,10 +259,21 @@ class GUI(Frame):
             print()
         print("****************************")
         
+    def printTilesSorted(self):
+        board = Miniboard.convertBoardWithTiles(self.board)
+        sortedList = Miniboard.sort_board_by_highest_number(board)
+        for tile in sortedList:
+            print(tile[0], end = ", ")
+        print()
+        
+        
     def test_legal_turn(self):
         self.create_from_list([0,0,0,0,2,4,2,4])
         self.debug_board()
         for d in Directions.generator():
             print(d, self.is_legal_turn(d))
         
-        
+    def test_heuristics(self):
+        self.create_from_list([0,0,2,0,0,0,0,2,0,0,0,4,2,2,16,32])
+        print(self.agent.getAction(self.board))
+        self.debug_board()

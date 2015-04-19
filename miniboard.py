@@ -201,17 +201,24 @@ class Miniboard():
         if not emptySlots:
             return None
             # game over
+        '''
+        # cut emptySlots into a half
+        while len(emptySlots) > 3:
+            emptySlots = [emptySlots[i] for i in range(len(emptySlots)) if not i % 2]
+        '''
         probabilityForOnePlacement = 1 / len(emptySlots)
         prob2 = PROB_FOR_TWO_NORMALIZED
         prob4 = 1 - prob2
         for x,y in emptySlots:
             newBoard2 = [tur[:] for tur in board]
             newBoard2[x][y] = 2
-            prob = probabilityForOnePlacement * prob2
+            prob = probabilityForOnePlacement # * prob2
             yield (prob, newBoard2)
+            '''
             newBoard4 = [tur[:] for tur in board]
             prob = probabilityForOnePlacement * prob4
             yield (prob, newBoard4)
+            '''
                 
     @staticmethod
     def score_for_board(board):

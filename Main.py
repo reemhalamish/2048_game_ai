@@ -18,6 +18,7 @@ def main():
     root.mainloop()
 
 if __name__ == '__main__':
+    for i in range(10):
         main()
     
     
@@ -25,10 +26,4 @@ if __name__ == '__main__':
 TODO:
 at depth=3 the AI is REALLY slow, how can I upgrade it?
 more heuristics:
-* consider something like that:
-[1024, 512, 256, 4]
-[256,  4,   2,   4]
-[.................]
-[.................]
-manDistance between equal tiles?
 '''
