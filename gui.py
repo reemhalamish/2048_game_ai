@@ -14,7 +14,7 @@ class GUI(Frame):
     '''
 
 
-    def __init__(self, master, agent = None):
+    def __init__(self, master, agent = None, dataHandler = None):
         master.minsize(width=SIZE_OF_WINDOW, height=SIZE_OF_WINDOW)
         master.maxsize(width=SIZE_OF_WINDOW, height=SIZE_OF_WINDOW)
         Frame.__init__(self, master)
@@ -23,6 +23,7 @@ class GUI(Frame):
         self.score = 0
         self.ignoreKeys = True
         self.agent = agent
+        self.dataHandler = dataHandler
         
         # canvas
         self.canvas = Canvas(master, width=SIZE_OF_WINDOW, height=SIZE_OF_WINDOW)
@@ -57,7 +58,7 @@ class GUI(Frame):
     def create_new_tile(self, x, y, value = 2):
         tile = Tile(self.canvas, x, y, value)
         self.board[x][y] = tile
-        tile.draw()
+#         tile.draw() TODO: restore
         
     def before_turn(self):
         board = self.board
@@ -155,7 +156,8 @@ class GUI(Frame):
                     self.move_tile(tile, direction)
                     
         self.end_of_turn()
-        self.after(AFTER_FOR_NEW_TURN, self.before_turn)
+        self.before_turn()
+#         self.after(AFTER_FOR_NEW_TURN, self.before_turn) TODOL restore it
 
         
     def end_of_turn(self):
@@ -224,8 +226,13 @@ class GUI(Frame):
         self.after(TEN_SEC_UNTIL_EXIT, self.exit_fast)
     
     def exit_fast(self):
-        self.printTilesSorted()
+#         self.printTilesSorted()
 #         self.debug_board()
+        if self.dataHandler:
+            heuristics = self.agent.get_heuristics()
+            score = self.score
+            bestTile = max([int(self.getTile(x, y)) for x in range(4) for y in range(4) if self.getTile(x, y)])
+            self.dataHandler.gameOver(heuristics, score, bestTile)
         self.master.destroy()
     
     def key_pressed(self, event):
@@ -249,6 +256,8 @@ class GUI(Frame):
 
 
     def debug_board(self, board = None):
+        print("****************************")
+
         b = board if board else self.board
         for y in range(4):
             for x in range(4):
@@ -257,7 +266,6 @@ class GUI(Frame):
                 else:
                     print("-", end = " "*5)
             print()
-        print("****************************")
         
     def printTilesSorted(self):
         board = Miniboard.convertBoardWithTiles(self.board)

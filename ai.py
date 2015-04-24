@@ -8,26 +8,12 @@ from time import time
 from game import BOUNDARYS, flipping30
 from random import random
 from turtledemo.forest import randomize
-DEPTH = 3
+DEPTH = 4
 PATTERN_FOR_SNAKE = ((0,1,2,3,3,2,1,0,0,1,2,3,3,2,1,0), (0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3))
 manhattanDistance = lambda x1,y1,x2,y2 : abs(y2-y1) + abs(x2-x1)
 spreadXY = lambda x,y : [(x-1,y), (x+1, y), (x,y-1), (x,y+1)]
 STOP_BEFORE_COMPUTER_BURNS_FAT = 7
-'''
-TODO: priorities:
-(h1, h2, h3, h4, h10, h12, h13)
-   h1 - ORANGE
-   h2 - ORANGE
-   h3 - ORANGE
-   h4 - RED
-   h6 - RED
-   h8 - GREEN
-   h9 - ORANGE
-   h10 - RED
-   h12 - ORANGE
-   h13 - RED
-   h14 - ORANGE
-'''
+
 NORMALIZE_1 = lambda x : x//2
 NORMALIZE_2 = 8
 NORMALIZE_3 = 1
@@ -37,11 +23,15 @@ NORMALIZE_6 = 32
 NORMALIZE_8 = lambda x : x//4
 NORMALIZE_9 = 1
 NORMALIZE_10 = 32
+NORMALIZE_11 = 8
 NORMALIZE_12 = lambda x : x//4
 NORMALIZE_13 = lambda x : x//2
 NORMALIZE_14 = lambda x : x//2
 NORMALIZE_15 = 3
 NORMALIZE_18 = lambda x : x//2
+NORMALIZE_20 = lambda x : 2 * x
+NORMALIZE_21 = lambda x : x
+
 
 
 class ExpectimaxAgent:
@@ -158,7 +148,7 @@ class ExpectimaxAgent:
             if (t0 >= t1 and t1 >= t2 and t2 >= t3) or (t0 <= t1 and t1 <= t2 and t2 <= t3):
                 sumLine = t0+t1+t2+t3
                 bonus = max(sumLine, bonus)
-        return bonus 
+        return bonus * NORMALIZE_11
             
     def h12(self, board):
         ''' arrange the tiles on all the board - [64,32,4,0] will get more then [64,32,0,4] '''
@@ -296,12 +286,12 @@ class ExpectimaxAgent:
     def h18(self,board):
         ''' snakes from whetever corner! '''
         bonus = []
-        snake = self.h17
+        snake = ExpectimaxAgent.h17
         x, y = PATTERN_FOR_SNAKE
-        bonus.append(snake(board, x, y))
-        bonus.append(snake(board, flipping30(x), y))
-        bonus.append(snake(board, x, flipping30(y)))
-        bonus.append(snake(board, flipping30(x), flipping30(y)))
+        bonus.append(snake(self,board, x, y))
+        bonus.append(snake(self,board, flipping30(x), y))
+        bonus.append(snake(self,board, x, flipping30(y)))
+        bonus.append(snake(self,board, flipping30(x), flipping30(y)))
         return NORMALIZE_18(max(bonus))
     
     def h19(self, board):
@@ -320,31 +310,77 @@ class ExpectimaxAgent:
                     lastTile = tile
         return bonus
         
+    def h20(self, board):
+        '''
+gets bonus for every tile in the x's, half a bonus for y's -
+xxxx
+yyyy
+0000
+0000
+in order to make the heavy tiles get into one side
+        '''
+        return max((sum(board[0]) + sum(board[1]) // 2,
+                    sum(board[3]) + sum(board[2]) // 2,
+                    sum([board[i][0] for i in range(4)]) + sum([board[i][1] for i in range(4)]) // 2,
+                    sum([board[i][3] for i in range(4)]) + sum([board[i][2] for i in range(4)]) // 2
+                    ))
                     
-                
-        
-        
-        # x way
-        for x, y in zip(PATTERN_FOR_SNAKE[0], PATTERN_FOR_SNAKE[1]):
-            if board[x][y] <= tile:
-                bonusX, tile = bonusX + tile, board[x][y]
-            else: break
+    
+    def h21(self, board):
+        ''''' an upgrade of 20 - 
+        make the heavy tiles get into one side,
+        double the bonus for every ordered tile
+        double the bonus for the corners '''
+        line_feeders = ((board[0],board[1]), (board[3], board[2]), ([board[i][0] for i in range(4)], [board[i][1] for i in range(4)]), ([board[i][3] for i in range(4)], [board[i][2] for i in range(4)]))
+        bonus = 0
+        for first_line, second_line in line_feeders:
+            # if first line is sorted - double the bonus
+            myBonus = 8 * sum(first_line) + sum(second_line) //2
+            lastTile = float("inf")
+            for tile in first_line:
+                if tile <= lastTile:
+                    myBonus += tile
+                    lastTile = tile 
+                else: break
+            lastTile = float("inf")
+            for tile in reversed(first_line):
+                if tile <= lastTile:
+                    myBonus += tile
+                    lastTile = tile 
+                else: break
+            bonus += 10 * (first_line[0] + first_line[3])
+            bonus = max(bonus, myBonus)
             
-        # y way
-        tile = board[0][0]
-        for y,x in zip(PATTERN_FOR_SNAKE[0], PATTERN_FOR_SNAKE[1]):
-            if board[x][y] <= tile:
-                bonusY, tile = bonusY + tile, board[x][y]
-            else: break
-        
+        return NORMALIZE_21(bonus)
+    def h22(self, board):
+        ''' creating snakes all over the board.
+        checks for neighbours with a largeness 
+        between (x/2 , 2*x) for every x tile in the board '''
+        bonusX = bonusY = 0
+        for tile, x, y in Miniboard.generator(board):
+            x1, y1 = x+1, y+1
+            if tileIsInBoundaries(x1,y):
+                nextTile = board[x1][y]
+                if tile == nextTile or tile*2 == nextTile or nextTile*2 == tile:
+                    bonusX += tile
+            if tileIsInBoundaries(x,y1):
+                nextTile = board[x][y1]
+                if tile == nextTile or tile*2 == nextTile or nextTile*2 == tile:
+                    bonusY += tile
+                    
         return max(bonusX, bonusY)
+        
+         
+         
+        
 
-    def __init__(self):
+    def __init__(self, heuristics = (h1, h5)):
         '''
         Constructor
         '''
-        self.timesForHeuristics = {h : 0 for h in ExpectimaxAgent.heuristicsInUse}
-        self.pointsForHeuristics = {h : 0 for h in ExpectimaxAgent.heuristicsInUse}
+        self.heuristicsInUse = heuristics
+        self.timesForHeuristics = {h : 0 for h in self.heuristicsInUse}
+        self.pointsForHeuristics = {h : 0 for h in self.heuristicsInUse}
         self.biggestTile = 8
     
     def getAction(self, boardWithTiles):
@@ -357,15 +393,15 @@ class ExpectimaxAgent:
     
         if self.biggestTile == Miniboard.Max(boardWithInt)[0]:
             self.biggestTile *= 2
-            self.timesForHeuristics = {h : 0 for h in ExpectimaxAgent.heuristicsInUse}
-            self.pointsForHeuristics = {h : 0 for h in ExpectimaxAgent.heuristicsInUse}
+            self.timesForHeuristics = {h : 0 for h in self.heuristicsInUse}
+            self.pointsForHeuristics = {h : 0 for h in self.heuristicsInUse}
         
-        if (score == float("-inf")):
-            self.debug_heuristics(boardWithInt)
-#             print("************")
+#         if (score == float("-inf")):
+#             self.debug_heuristics(boardWithInt)
+#             print("~~~~")
 
         return action
-        
+#         
 #         except TypeError:
 #             self.debug_heuristics(boardWithInt)
 #             print("************")
@@ -399,7 +435,7 @@ class ExpectimaxAgent:
             return -99999999 # TODO: maybe change the number
         
         retval = 0
-        for h in ExpectimaxAgent.heuristicsInUse:
+        for h in self.heuristicsInUse:
             start = time()
             score = h(self, board)
             retval += score
@@ -410,19 +446,18 @@ class ExpectimaxAgent:
         return retval
 
     def debug_heuristics(self, board):
-        return
         score = self.pointsForHeuristics
         time = self.timesForHeuristics
         print("biggest tile in the board:", self.biggestTile)
-        for h in ExpectimaxAgent.heuristicsInUse:
+        for h in self.heuristicsInUse:
             print("score:", abs(score[h]),"time:", time[h], "name:", h)
 
+    def get_heuristics(self):
+        return self.heuristicsInUse
 
-    heuristicsInUse = (h19, h18, h1, h5, h10) #(h16,h15, h10, h1, h5, h17) #(h1, h2, h3, h4, h10, h13, h15)
-    normalizeHeuristics = {}
 
 
-'''
+        '''
         REACHED 4096:
         
 NORMALIZE_1 = lambda x : x//2
@@ -440,11 +475,37 @@ NORMALIZE_15 = 3
 heuristicsInUse = (h1, h2, h3, h4, h10, h13, h15)
 '''
 
-'''
+    '''
 1024, 256, 64, 32, 16, 8, 8, 8, 4, 4, 4, 4, 2, 2, 2, 2, 
 128, 64, 32, 32, 16, 16, 16, 8, 8, 4, 4, 4, 4, 4, 4, 2, 
 2048, 512, 256, 64, 64, 32, 32, 16, 8, 8, 8, 4, 4, 2, 2, 2, 
 2048, 128, 64, 32, 32, 16, 16, 8, 8, 8, 4, 4, 4, 2, 2, 2, 
     heuristicsInUse = (h18, h1, h5, h9, h10) #(h16,h15, h10, h1, h5, h17) #(h1, h2, h3, h4, h10, h13, h15)
 '''
-''' heuristicsInUse = (h19, h18, h1, h5, h10) # scored 50% of 2048 with NORMALIZED_5 = 1 '''
+    ''' heuristicsInUse = (h19, h18, h1, h5, h10) # scored 50% of 2048 with NORMALIZED_5 = 1 '''
+    
+    heuristicsInUse =(h1,h2,h3,h4,h5,h6,h7,h8,h9,h10,h11,h12,h13,h14,h15,h18,h19,h20,h21,h22)#(h19, h18, h1, h5, h10, h21) #  (h20, h1, h5, h11) #(h19, h18, h1, h5, h10) #(h16,h15, h10, h1, h5, h17) #(h1, h2, h3, h4, h10, h13, h15)
+    heuristicsNames = { 
+                        h1 : 'h1', 
+                        h2 : 'h2', 
+                        h3 : 'h3', 
+                        h4 : 'h4', 
+                        h5 : 'h5', 
+                        h6 : 'h6', 
+                        h7 : 'h7', 
+                        h8 : 'h8', 
+                        h9 : 'h9', 
+                        h10 : 'h10', 
+                        h11 : 'h11', 
+                        h12 : 'h12', 
+                        h13 : 'h13', 
+                        h14 : 'h14', 
+                        h15 : 'h15', 
+                        h16 : 'h16', 
+                        h17 : 'h17', 
+                        h18 : 'h18', 
+                        h19 : 'h19', 
+                        h20 : 'h20', 
+                        h21 : 'h21', 
+                        h22 : 'h22', 
+                       }

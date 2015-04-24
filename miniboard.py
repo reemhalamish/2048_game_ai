@@ -100,7 +100,7 @@ class Miniboard():
 
     @staticmethod
     def calculateNextBoardUsing(direction, oldBoard):
-        ''' returns the new board '''
+        ''' returns deep copy of the new board '''
         board = [tur[:] for tur in oldBoard]
         if direction == Directions.WEST or direction == Directions.NORTH:
             for x in range(4):
@@ -201,11 +201,11 @@ class Miniboard():
         if not emptySlots:
             return None
             # game over
-        '''
+        
         # cut emptySlots into a half
-        while len(emptySlots) > 3:
-            emptySlots = [emptySlots[i] for i in range(len(emptySlots)) if not i % 2]
-        '''
+        while len(emptySlots) > 4:
+            emptySlots = [slot for slot,i in zip(emptySlots, range(10)) if not i % 2]
+        
         probabilityForOnePlacement = 1 / len(emptySlots)
         prob2 = PROB_FOR_TWO_NORMALIZED
         prob4 = 1 - prob2
@@ -267,8 +267,3 @@ def test_miniboard():
 if __name__ == '__main__':
             test_miniboard()
             
-'''
- TODO:
- 
- maybe if I will move it from None to 0 it will be faster because there will be no tests!
-'''

@@ -32,7 +32,7 @@ class Tile():
         self.image = None
         self.image_in_canvas = None
         self.meragble = meragble # is here to know if this tile has already moved this turn
-        self.draw()
+#         self.draw() TODO: restore
         
     def draw(self, x = None, y = None):
         if not x:
@@ -67,14 +67,14 @@ class Tile():
         x, y = anotherTile.getXY()
         self.update_new_place(x,y)
         anotherTile.erase() # the picture in the canvas
-        del anotherTile# TODO: need to remove it?
+        del anotherTile
     
     def update_new_place(self, x = None, y = None):
         if (not x == None):
             self.x = x
         if (not y == None):
             self.y = y
-        self.__update_drawing(x,y)
+#         self.__update_drawing(x,y) TODO: restore it
         
     
     def end_of_turn(self):

@@ -1,0 +1,145 @@
+for heuristic: <function ExpectimaxAgent.h1 at 0x0213A108>
+games played:3480
+total score:34616684
+maximum score in one game:77764
+total winning 4096:27
+total winning 2048:437
+total winning 1024:1252
+for heuristic: <function ExpectimaxAgent.h2 at 0x0213A150>
+games played:3480
+total score:23525396
+maximum score in one game:67452
+total winning 4096:5
+total winning 2048:164
+total winning 1024:730
+for heuristic: <function ExpectimaxAgent.h3 at 0x0213A198>
+games played:3480
+total score:21694644
+maximum score in one game:61312
+total winning 4096:7
+total winning 2048:148
+total winning 1024:671
+for heuristic: <function ExpectimaxAgent.h4 at 0x0213A1E0>
+games played:3480
+total score:23603424
+maximum score in one game:76216
+total winning 4096:6
+total winning 2048:166
+total winning 1024:730
+for heuristic: <function ExpectimaxAgent.h5 at 0x0213A228>
+games played:3480
+total score:32571700
+maximum score in one game:61312
+total winning 4096:4
+total winning 2048:274
+total winning 1024:1360
+for heuristic: <function ExpectimaxAgent.h6 at 0x0213A270>
+games played:3480
+total score:9421416
+maximum score in one game:37068
+total winning 4096:0
+total winning 2048:10
+total winning 1024:95
+for heuristic: <function ExpectimaxAgent.h7 at 0x0213A2B8>
+games played:3480
+total score:23438532
+maximum score in one game:72460
+total winning 4096:7
+total winning 2048:171
+total winning 1024:752
+for heuristic: <function ExpectimaxAgent.h8 at 0x0213A300>
+games played:3480
+total score:28879516
+maximum score in one game:77764
+total winning 4096:17
+total winning 2048:285
+total winning 1024:1025
+for heuristic: <function ExpectimaxAgent.h9 at 0x0213A348>
+games played:3480
+total score:20109564
+maximum score in one game:47784
+total winning 4096:2
+total winning 2048:128
+total winning 1024:653
+for heuristic: <function ExpectimaxAgent.h10 at 0x0213A390>
+games played:3480
+total score:35405932
+maximum score in one game:67580
+total winning 4096:12
+total winning 2048:340
+total winning 1024:1425
+for heuristic: <function ExpectimaxAgent.h11 at 0x0213A3D8>
+games played:3480
+total score:30948780
+maximum score in one game:72460
+total winning 4096:8
+total winning 2048:268
+total winning 1024:1186
+for heuristic: <function ExpectimaxAgent.h12 at 0x0213A420>
+games played:3480
+total score:27156808
+maximum score in one game:76216
+total winning 4096:14
+total winning 2048:223
+total winning 1024:954
+for heuristic: <function ExpectimaxAgent.h13 at 0x0213A468>
+games played:3480
+total score:29205096
+maximum score in one game:77764
+total winning 4096:18
+total winning 2048:281
+total winning 1024:999
+for heuristic: <function ExpectimaxAgent.h14 at 0x0213A4B0>
+games played:3480
+total score:23402612
+maximum score in one game:62384
+total winning 4096:6
+total winning 2048:168
+total winning 1024:757
+for heuristic: <function ExpectimaxAgent.h15 at 0x0213A4F8>
+games played:3480
+total score:21720544
+maximum score in one game:45792
+total winning 4096:1
+total winning 2048:120
+total winning 1024:717
+for heuristic: <function ExpectimaxAgent.h18 at 0x0213A5D0>
+games played:3480
+total score:19877424
+maximum score in one game:36464
+total winning 4096:0
+total winning 2048:78
+total winning 1024:585
+for heuristic: <function ExpectimaxAgent.h19 at 0x0213A618>
+games played:3480
+total score:23302064
+maximum score in one game:77764
+total winning 4096:6
+total winning 2048:165
+total winning 1024:747
+for heuristic: <function ExpectimaxAgent.h20 at 0x0213A660>
+games played:3480
+total score:30871128
+maximum score in one game:70180
+total winning 4096:19
+total winning 2048:286
+total winning 1024:1150
+for heuristic: <function ExpectimaxAgent.h21 at 0x0213A6A8>
+games played:3480
+total score:14876712
+maximum score in one game:35848
+total winning 4096:0
+total winning 2048:15
+total winning 1024:245
+for heuristic: <function ExpectimaxAgent.h22 at 0x0213A6F0>
+games played:3480
+total score:18602436
+maximum score in one game:49920
+total winning 4096:3
+total winning 2048:62
+total winning 1024:515
+won 1024 game: {<function ExpectimaxAgent.h8 at 0x0213A300>: 1025, <function ExpectimaxAgent.h5 at 0x0213A228>: 1360, <function ExpectimaxAgent.h14 at 0x0213A4B0>: 757, <function ExpectimaxAgent.h19 at 0x0213A618>: 747, <function ExpectimaxAgent.h18 at 0x0213A5D0>: 585, <function ExpectimaxAgent.h13 at 0x0213A468>: 999, <function ExpectimaxAgent.h6 at 0x0213A270>: 95, <function ExpectimaxAgent.h21 at 0x0213A6A8>: 245, <function ExpectimaxAgent.h7 at 0x0213A2B8>: 752, <function ExpectimaxAgent.h12 at 0x0213A420>: 954, <function ExpectimaxAgent.h15 at 0x0213A4F8>: 717, <function ExpectimaxAgent.h1 at 0x0213A108>: 1252, <function ExpectimaxAgent.h20 at 0x0213A660>: 1150, <function ExpectimaxAgent.h9 at 0x0213A348>: 653, <function ExpectimaxAgent.h2 at 0x0213A150>: 730, <function ExpectimaxAgent.h3 at 0x0213A198>: 671, <function ExpectimaxAgent.h10 at 0x0213A390>: 1425, <function ExpectimaxAgent.h22 at 0x0213A6F0>: 515, <function ExpectimaxAgent.h11 at 0x0213A3D8>: 1186, <function ExpectimaxAgent.h4 at 0x0213A1E0>: 730}
+won 2048 game: {<function ExpectimaxAgent.h8 at 0x0213A300>: 285, <function ExpectimaxAgent.h5 at 0x0213A228>: 274, <function ExpectimaxAgent.h14 at 0x0213A4B0>: 168, <function ExpectimaxAgent.h19 at 0x0213A618>: 165, <function ExpectimaxAgent.h18 at 0x0213A5D0>: 78, <function ExpectimaxAgent.h13 at 0x0213A468>: 281, <function ExpectimaxAgent.h6 at 0x0213A270>: 10, <function ExpectimaxAgent.h21 at 0x0213A6A8>: 15, <function ExpectimaxAgent.h7 at 0x0213A2B8>: 171, <function ExpectimaxAgent.h12 at 0x0213A420>: 223, <function ExpectimaxAgent.h15 at 0x0213A4F8>: 120, <function ExpectimaxAgent.h1 at 0x0213A108>: 437, <function ExpectimaxAgent.h20 at 0x0213A660>: 286, <function ExpectimaxAgent.h9 at 0x0213A348>: 128, <function ExpectimaxAgent.h2 at 0x0213A150>: 164, <function ExpectimaxAgent.h3 at 0x0213A198>: 148, <function ExpectimaxAgent.h10 at 0x0213A390>: 340, <function ExpectimaxAgent.h22 at 0x0213A6F0>: 62, <function ExpectimaxAgent.h11 at 0x0213A3D8>: 268, <function ExpectimaxAgent.h4 at 0x0213A1E0>: 166}
+won 4096 game: {<function ExpectimaxAgent.h8 at 0x0213A300>: 17, <function ExpectimaxAgent.h5 at 0x0213A228>: 4, <function ExpectimaxAgent.h14 at 0x0213A4B0>: 6, <function ExpectimaxAgent.h20 at 0x0213A660>: 19, <function ExpectimaxAgent.h13 at 0x0213A468>: 18, <function ExpectimaxAgent.h19 at 0x0213A618>: 6, <function ExpectimaxAgent.h7 at 0x0213A2B8>: 7, <function ExpectimaxAgent.h12 at 0x0213A420>: 14, <function ExpectimaxAgent.h15 at 0x0213A4F8>: 1, <function ExpectimaxAgent.h1 at 0x0213A108>: 27, <function ExpectimaxAgent.h9 at 0x0213A348>: 2, <function ExpectimaxAgent.h2 at 0x0213A150>: 5, <function ExpectimaxAgent.h3 at 0x0213A198>: 7, <function ExpectimaxAgent.h10 at 0x0213A390>: 12, <function ExpectimaxAgent.h22 at 0x0213A6F0>: 3, <function ExpectimaxAgent.h11 at 0x0213A3D8>: 8, <function ExpectimaxAgent.h4 at 0x0213A1E0>: 6}
+
+total 18585 games
