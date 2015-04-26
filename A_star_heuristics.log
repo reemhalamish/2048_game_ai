@@ -1,0 +1,22 @@
+score:17426. best tile:2048heuristics:h1(64), h8(64), h10(64), h12(64), h13(64), h20(64), 
+score:32676. best tile:4096heuristics:h1(64), h8(64), h10(32), h20(64), h12(64), h13(64), 
+score:32081. best tile:2048heuristics:h1(32), h8(64), h10(32), h20(64), h12(64), h13(64), 
+score:19806. best tile:2048heuristics:h1(32), h5(32), h8(32), h10(32), h11(32), h12(32), h13(32), h19(32), h20(32), 
+score:23692. best tile:2048heuristics:h10(32), h11(32), h12(16), h5(32), h20(32), h13(32), h19(32), h8(32), h1(32), 
+score:22292. best tile:2048heuristics:h10(32), h11(32), h12(16), h5(32), h20(32), h13(32), h19(32), h8(16), h1(32), 
+score:22441. best tile:2048heuristics:h10(32), h11(32), h12(16), h5(16), h20(32), h13(32), h19(32), h8(16), h1(32), 
+score:27949. best tile:4096heuristics:h10(32), h11(32), h12(16), h5(8), h20(32), h13(32), h19(32), h8(16), h1(32), 
+score:28072. best tile:4096heuristics:h10(16), h11(32), h12(16), h5(8), h20(32), h13(32), h19(32), h8(16), h1(32), 
+score:34412. best tile:4096heuristics:h10(16), h11(32), h12(8), h5(8), h20(32), h13(32), h19(32), h8(16), h1(32), 
+
+
+ found a solution!score:21319. best tile:2048heuristics:h1(64), h8(64), h10(64), h12(64), h13(64), h20(64), 
+score:33200. best tile:4096heuristics:h1(64), h8(64), h10(64), h20(32), h12(64), h13(64), 
+score:36404. best tile:4096heuristics:h1(32), h8(64), h10(64), h13(64), h12(64), h20(32), 
+score:31011. best tile:2048heuristics:h1(32), h8(64), h10(32), h20(32), h12(64), h13(64), 
+score:32279. best tile:4096heuristics:h1(32), h8(64), h10(16), h13(64), h12(64), h20(32), 
+score:32959. best tile:2048heuristics:h1(32), h8(64), h10(16), h20(32), h12(32), h13(64), 
+score:37824. best tile:4096heuristics:h1(32), h8(64), h10(16), h13(64), h12(32), h20(16), 
+
+
+ found a solution!score: 37824. best tile: 4096heuristics:h1(32), h8(64), h10(16), h13(64), h12(32), h20(16), 

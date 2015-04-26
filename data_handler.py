@@ -15,7 +15,10 @@ class DataHandler():
         '''
         Constructor
         '''
-        heuristics = ExpectimaxAgent.heuristicsInUse
+        heuristics = set(ExpectimaxAgent.heuristicsInUse)
+        for h in ExpectimaxAgent.curHeuToCheck:
+            heuristics.add(h)
+        
         self.games = {h : 0 for h in heuristics}
         self.won4096 = {h : 0 for h in heuristics}
         self.won2048 = {h : 0 for h in heuristics}
@@ -58,7 +61,7 @@ class DataHandler():
         print("won 4096 game:", {h : self.won4096[h] for h in heuristics if self.won4096[h] > 0})
     
     def toFile(self):
-        f = open("dataAboutHeuristics.log", "w")
+        f = open("dataAboutHeuristics.log", "a")
         heuristics = ExpectimaxAgent.heuristicsInUse
         for heuristic in heuristics:
             f.write("for heuristic: "+str(heuristic)+"\n")

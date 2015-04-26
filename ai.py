@@ -149,7 +149,6 @@ class ExpectimaxAgent:
                 sumLine = t0+t1+t2+t3
                 bonus = max(sumLine, bonus)
         return bonus * NORMALIZE_11
-            
     def h12(self, board):
         ''' arrange the tiles on all the board - [64,32,4,0] will get more then [64,32,0,4] '''
         sumLines = 0
@@ -189,7 +188,6 @@ class ExpectimaxAgent:
                         sumTur += t0
             sumTurs += sumTur
             return NORMALIZE_12(sumLines + sumTurs)
-        
     def h13(self, board):
         ''' very close like h12, this function checks for monotonicity.
         only this heuristic checks monotonicity on the WHOLE SCREEN '''
@@ -213,8 +211,6 @@ class ExpectimaxAgent:
         linesBonus = max(bonus[0:2])
         tursBonus = max(bonus[2:4])
         return NORMALIZE_13(linesBonus + tursBonus)
-            
-            
     def h14(self, board):
         ''' this heuristic is manDistance between same tiles. supposed to figure out things like this:
                 consider something like that:
@@ -370,14 +366,36 @@ in order to make the heavy tiles get into one side
                     
         return max(bonusX, bonusY)
         
+    def h23(self, board):
+        ''' the first found A* heuristic, including the other heuristics with weights '''
+        return ((self.h10(board) * 16) + \
+                (self.h11(board) * 32) + \
+                (self.h12(board) * 8)  + \
+                (self.h5(board) * 8)   + \
+                (self.h20(board) * 32) + \
+                (self.h13(board) * 32) + \
+                (self.h19(board) * 32) + \
+                (self.h8(board) * 16)  + \
+                (self.h1(board) * 32))
+                
+    def h24(self, board):
+        ''' the second found A* heuristic, including the other heuristics with weights '''
+        return ((self.h10(board) * 16) + \
+                (self.h12(board) * 32)  + \
+                (self.h20(board) * 16) + \
+                (self.h13(board) * 64) + \
+                (self.h8(board) * 64)  + \
+                (self.h1(board) * 32))
          
          
         
 
-    def __init__(self, heuristics = (h1, h5)):
+    def __init__(self, heuristics = None):
         '''
         Constructor
         '''
+        if not heuristics:
+            heuristics = ExpectimaxAgent.curHeuToCheck
         self.heuristicsInUse = heuristics
         self.timesForHeuristics = {h : 0 for h in self.heuristicsInUse}
         self.pointsForHeuristics = {h : 0 for h in self.heuristicsInUse}
@@ -396,9 +414,9 @@ in order to make the heavy tiles get into one side
             self.timesForHeuristics = {h : 0 for h in self.heuristicsInUse}
             self.pointsForHeuristics = {h : 0 for h in self.heuristicsInUse}
         
-#         if (score == float("-inf")):
-#             self.debug_heuristics(boardWithInt)
-#             print("~~~~")
+        if (score == float("-inf")):
+            self.debug_heuristics(boardWithInt)
+            print("~~~~")
 
         return action
 #         
@@ -451,6 +469,7 @@ in order to make the heavy tiles get into one side
         print("biggest tile in the board:", self.biggestTile)
         for h in self.heuristicsInUse:
             print("score:", abs(score[h]),"time:", time[h], "name:", h)
+        Miniboard.debug_board(board)
 
     def get_heuristics(self):
         return self.heuristicsInUse
@@ -508,4 +527,11 @@ heuristicsInUse = (h1, h2, h3, h4, h10, h13, h15)
                         h20 : 'h20', 
                         h21 : 'h21', 
                         h22 : 'h22', 
+                        h23 : 'A* first heuristic',
+                        h24 : 'A* second heuristic'
                        }
+    heuristicsWon4096 = (h1, h8, h10, h12, h13, h20)
+    heuristicsWon2048 = (h1, h19)
+    heuristicOK2048   = (h1, h5, h8, h10, h11, h12, h13, h19, h20)
+    heuristicsWon1024 = (h1, h5, h8, h10, h11, h12, h13, h20)
+    curHeuToCheck     = (h24,)

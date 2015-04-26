@@ -9,10 +9,12 @@ from game import weighted_choice, Directions, PriorityQueue, GAME_OVER_VALUE_FOR
 from random import choice as choose_uni_from_seq
 
 heuristicsAll = ExpectimaxAgent.heuristicsInUse
-WEIGHT_VALUE_FOR_HEURISTIC_MINIMUM = 1
-WEIGHT_VALUE_FOR_HEURISTIC_START = 128
-TIMES_TO_RUN_EVERY_GAME = 3
-SCORE_FOR_4096 = 45056
+WEIGHT_VALUE_FOR_HEURISTIC_MINIMUM = 2
+WEIGHT_VALUE_FOR_HEURISTIC_START = 8
+TIMES_TO_RUN_EVERY_GAME = 7
+BoardWith2048 = [[2048,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+BoardWith4096 = [[4096,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+SCORE_FOR_WINNING = (Miniboard.score_for_board(BoardWith4096) * 2 + Miniboard.score_for_board(BoardWith2048)) //3
 class QuietRunner():
     '''
     A member of this class can run 2048 games quietly (without GUI)
@@ -111,13 +113,16 @@ class Node():
     def __ge__(self, other): return self > other or self == other
     def __int__(self): return self.score
     
-    def __init__(self, heuristics = set(), weights = dict()):
+    def __init__(self, heuristics = set(), weights = dict(), computedScore = None):
         for h in heuristics:
             if not h in weights:
                 weights[h] = WEIGHT_VALUE_FOR_HEURISTIC_START
         self.heuristics = heuristics
         self.weights = weights
-        self.runGame()
+        if computedScore:
+            self.score = computedScore
+        else:
+            self.runGame()
     def runGame(self):
         print("best tiles:", end = ' ')
         score = 0
@@ -129,7 +134,7 @@ class Node():
             print(runner.getHighestTile(), end = ",")
         print()
         self.score = score // TIMES_TO_RUN_EVERY_GAME
-        self.hughestTile = highestTile
+        self.highestTile = highestTile
         
     
     def getNextNodes(self):
@@ -166,10 +171,16 @@ class Node():
                        (h,w[h]) for h in heuristics
                        ]))
     def printInfo(self):
-        print("score:", self.score,". best tile:", self.hughestTile,"heuristics:", end = '')
+        print("score:", self.score,". best tile:", self.highestTile,"heuristics:", end = '')
         for h in self.heuristics:
             print(ExpectimaxAgent.heuristicsNames[h]+"("+str(self.weights[h])+")",end = ', ')
         print()
+        f = open("A_star_heuristics.log", "a")
+        f.write("score:"+ str(self.score)+". best tile:"+ str(self.highestTile)+"heuristics:")
+        for h in self.heuristics:
+            f.write(ExpectimaxAgent.heuristicsNames[h]+"("+str(self.weights[h])+"), ")
+        f.write('\n')
+        f.close()
             
         
 def test_runner():
@@ -193,12 +204,52 @@ def test_node():
     b = Node([])
     print(a > b)
 
-def first_node(): return Node(set(heuristicsAll[0:4])) #TODO: remove the [0:4], update the rellevan heuristics based on the results from data_handler 
+def first_nodes(): 
+    WEIGHTS_FOR_ALL_THE_GOOD_HEURISTICS = 32
+    
+    WEIGHTS_FOR_4096        = 64
+    WEIGHTS_FOR_2048_GOOD   = 128
+    WEIGHTS_FOR_2048_ALL    = 32
+    WEIGHTS_FOR_1024        = 32
+    WEIGHTS_FOR_ALL         = 8
+    
+    
+    h4096 = ExpectimaxAgent.heuristicsWon4096
+    weights4096 = {h : WEIGHTS_FOR_4096 for h in h4096}
+    yield Node(h4096, weights4096)
+    
+    h2048 = ExpectimaxAgent.heuristicsWon2048
+    weights2048 = {h : WEIGHTS_FOR_2048_GOOD for h in h2048}
+    yield Node(h2048, weights2048)
+    
+    h2048all = ExpectimaxAgent.heuristicOK2048
+    weights2048all = {h : WEIGHTS_FOR_2048_ALL for h in h2048all}
+    yield Node(h2048all, weights2048all)
+    
+    h1024 = ExpectimaxAgent.heuristicsWon1024
+    weights1024 = {h : WEIGHTS_FOR_1024 for h in h1024}
+    yield Node(h1024, weights1024)
+    
+    hAll = ExpectimaxAgent.heuristicsInUse
+    weightsAll = {h : WEIGHTS_FOR_ALL for h in hAll}
+    yield Node(hAll, weightsAll)
+    
+    hAllRelevant = set()
+    for h in h4096:
+        hAllRelevant.add(h)
+    for h in h2048:
+        hAllRelevant.add(h)
+    weightsAllRelevant = {h : WEIGHTS_FOR_ALL_THE_GOOD_HEURISTICS for h in hAllRelevant}
+    yield Node(hAllRelevant, weightsAllRelevant)
+    
+    
+     
 "Search the node that has the lowest combined cost and heuristic first."
 def aStarSearch():
     fringe = PriorityQueue()
-    start = first_node()
-    fringe.push(start, 0)
+    start = first_nodes()
+    for node in start:
+        fringe.push(node, -int(node))
     visited = set()
     
     while not fringe.isEmpty():
@@ -206,11 +257,15 @@ def aStarSearch():
         cur_visited = cur_node.getImportantInfoForVisited()
         cur_node.printInfo()
         if cur_visited in visited:
-            print("already visited - ", cur_visited)
+            print("already visited - ",end = "")
+            print("score:", cur_node.score,". best tile:", cur_node.highestTile,"heuristics:", end = '')
+            for h in cur_node.heuristics:
+                print(ExpectimaxAgent.heuristicsNames[h]+"("+str(cur_node.weights[h])+")",end = ', ')
+            print()
             continue
         visited.add(cur_visited)
         
-        if int(cur_node) >= SCORE_FOR_4096: # means it scored more then 4096 on the AVERAGE score - this is good!
+        if int(cur_node) >= SCORE_FOR_WINNING: # means it scored more then 4096 on the AVERAGE score - this is good!
             return cur_node
         for nextNode in cur_node.getNextNodes():
             if not nextNode.getImportantInfoForVisited() in visited:
@@ -223,11 +278,13 @@ if __name__ == '__main__':
 #     test_node()
     solution = aStarSearch()
     if solution:
-        f = open("A*.log", 'a')
-        f.write("score: " + solution.score + ". best tile: " + solution.highestTile + "heuristics:")
+        f = open("A_star_heuristics.log", 'a')
+        f.write("\n\n found a solution!")
+        f.write("score: " + str(solution.score) + ". best tile: " + str(solution.highestTile) + "heuristics:")
         for h in solution.heuristics:
             f.write(ExpectimaxAgent.heuristicsNames[h]+"("+str(solution.weights[h])+"), ")
         f.write("\n")
+        f.close()
         
 
 # TODO: run A* on the nodes

@@ -11,7 +11,7 @@ from data_handler import DataHandler
 TIMES_TO_CHECK_EVERY_RUN = 3
 MAXIMUM_HEURISTICS_IN_GAME = 4
 
-def runOneTime(heuristics, dataSaver):
+def runOneTime(dataSaver, heuristics = None):
     Agent = ExpectimaxAgent(heuristics)
     root = tkinter.Tk()
     root.title("2048")
@@ -26,7 +26,7 @@ def recuresiveRun(heuIndex, heuByNow, dataSaver):
     if heuIndex == len(heuristicsToCheck):
         if not heuByNow:return
         for _ in range(TIMES_TO_CHECK_EVERY_RUN):
-            runOneTime(heuByNow, dataSaver)
+            runOneTime(dataSaver, heuByNow)
         return
             
     recuresiveRun(heuIndex+1, heuByNow, dataSaver)
@@ -45,7 +45,8 @@ def main():
 
 if __name__ == '__main__':
 #     for i in range(10):
-        main()
+        dataSaver = DataHandler()
+        runOneTime(dataSaver)
         
     
     

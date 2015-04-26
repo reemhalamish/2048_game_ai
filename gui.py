@@ -58,7 +58,7 @@ class GUI(Frame):
     def create_new_tile(self, x, y, value = 2):
         tile = Tile(self.canvas, x, y, value)
         self.board[x][y] = tile
-#         tile.draw() TODO: restore
+        tile.draw()
         
     def before_turn(self):
         board = self.board
