@@ -9,12 +9,12 @@ from game import weighted_choice, Directions, PriorityQueue, GAME_OVER_VALUE_FOR
 from random import choice as choose_uni_from_seq
 
 heuristicsAll = ExpectimaxAgent.heuristicsInUse
-WEIGHT_VALUE_FOR_HEURISTIC_MINIMUM = 2
-WEIGHT_VALUE_FOR_HEURISTIC_START = 8
+WEIGHT_VALUE_FOR_HEURISTIC_MINIMUM = 0
+WEIGHT_VALUE_FOR_HEURISTIC_START = 45
 TIMES_TO_RUN_EVERY_GAME = 7
 BoardWith2048 = [[2048,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 BoardWith4096 = [[4096,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-SCORE_FOR_WINNING = (Miniboard.score_for_board(BoardWith4096) * 2 + Miniboard.score_for_board(BoardWith2048)) //3
+SCORE_FOR_WINNING = (Miniboard.score_for_board(BoardWith4096))
 class QuietRunner():
     '''
     A member of this class can run 2048 games quietly (without GUI)
@@ -164,6 +164,31 @@ class Node():
         else:
             newWeights[h] = temp
         return Node(heuristics, newWeights)
+    
+    def getNextNodesVer2(self):
+        for h in self.heuristics:
+            yield self.newNodeMinimizeHeuristicBy10(h)
+            yield self.newNodeMaximizeHeuristicBy10(h)
+
+    def newNodeMaximizeHeuristicBy10(self, h):
+        newWeights = {v : k for v,k in self.weights.items()}
+        newWeights[h] += 10
+        return Node(self.heuristics, newWeights)
+    def newNodeMinimizeHeuristicBy10(self, h):
+        newWeights = {v : k for v,k in self.weights.items()}
+        heuristics = {h for h in self.heuristics}
+        temp = newWeights[h]
+        temp -= 10
+        if (temp < WEIGHT_VALUE_FOR_HEURISTIC_MINIMUM):
+            newWeights.pop(h)
+            heuristics.discard(h)
+        else:
+            newWeights[h] = temp
+        return Node(heuristics, newWeights)
+        
+        
+
+    
     ''' return this state - what specializes this node '''
     def getImportantInfoForVisited(self):
         heuristics, w = self.heuristics, self.weights
@@ -204,6 +229,7 @@ def test_node():
     b = Node([])
     print(a > b)
 
+''' can yield the nodes one at a time '''
 def first_nodes(): 
     WEIGHTS_FOR_ALL_THE_GOOD_HEURISTICS = 32
     
@@ -216,31 +242,35 @@ def first_nodes():
     
     h4096 = ExpectimaxAgent.heuristicsWon4096
     weights4096 = {h : WEIGHTS_FOR_4096 for h in h4096}
-    yield Node(h4096, weights4096)
+    #yield Node(h4096, weights4096)
     
     h2048 = ExpectimaxAgent.heuristicsWon2048
     weights2048 = {h : WEIGHTS_FOR_2048_GOOD for h in h2048}
-    yield Node(h2048, weights2048)
+    #yield Node(h2048, weights2048)
     
     h2048all = ExpectimaxAgent.heuristicOK2048
     weights2048all = {h : WEIGHTS_FOR_2048_ALL for h in h2048all}
-    yield Node(h2048all, weights2048all)
+    #yield Node(h2048all, weights2048all)
     
     h1024 = ExpectimaxAgent.heuristicsWon1024
     weights1024 = {h : WEIGHTS_FOR_1024 for h in h1024}
-    yield Node(h1024, weights1024)
+    #yield Node(h1024, weights1024)
     
     hAll = ExpectimaxAgent.heuristicsInUse
     weightsAll = {h : WEIGHTS_FOR_ALL for h in hAll}
-    yield Node(hAll, weightsAll)
+    #yield Node(hAll, weightsAll)
     
     hAllRelevant = set()
     for h in h4096:
         hAllRelevant.add(h)
     for h in h2048:
         hAllRelevant.add(h)
+    for h in h2048all:
+        hAllRelevant.add(h)
     weightsAllRelevant = {h : WEIGHTS_FOR_ALL_THE_GOOD_HEURISTICS for h in hAllRelevant}
-    yield Node(hAllRelevant, weightsAllRelevant)
+    #yield Node(hAllRelevant, weightsAllRelevant)
+    
+    yield Node(ExpectimaxAgent.curHeuToCheck, ExpectimaxAgent.curHeuWeights)
     
     
      
@@ -267,7 +297,7 @@ def aStarSearch():
         
         if int(cur_node) >= SCORE_FOR_WINNING: # means it scored more then 4096 on the AVERAGE score - this is good!
             return cur_node
-        for nextNode in cur_node.getNextNodes():
+        for nextNode in cur_node.getNextNodesVer2():
             if not nextNode.getImportantInfoForVisited() in visited:
                 fringe.push(nextNode, -int(nextNode))
     

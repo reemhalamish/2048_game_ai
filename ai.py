@@ -262,20 +262,22 @@ class ExpectimaxAgent:
         ''' hard-coded snakes beginnig from (0,0) '''
         if not runnningMazeX: runnningMazeX = PATTERN_FOR_SNAKE[0]
         if not runnningMazeY: runnningMazeY = PATTERN_FOR_SNAKE[1]
-        tile =  board[0][0]
+        tile = biggest = Miniboard.Max(board)[0]
         bonusX, bonusY = 0, 0
+        worth = 2 ** 16
         # x way
         for x, y in zip(runnningMazeX, runnningMazeY):
-            if board[x][y] <= tile:
-                bonusX, tile = bonusX + tile, board[x][y]
-            else: break
+            board[x][y] = tile
+            bonusX += (tile * worth)
+            worth //= 2
             
         # y way
-        tile = board[0][0]
+        tile = biggest
+        worth = 2 ** 16
         for y,x in zip(runnningMazeX, runnningMazeY):
-            if board[x][y] <= tile:
-                bonusY, tile = bonusY + tile, board[x][y]
-            else: break
+            board[x][y] = tile
+            bonusY += tile * worth
+            worth //= 2
         
         return max(bonusX, bonusY)
     
@@ -289,6 +291,29 @@ class ExpectimaxAgent:
         bonus.append(snake(self,board, x, flipping30(y)))
         bonus.append(snake(self,board, flipping30(x), flipping30(y)))
         return NORMALIZE_18(max(bonus))
+    
+    def h18a(self,board):
+        ''' snakes from the best corner! '''
+        NORMALIZE = 2
+        tile, xt, yt = Miniboard.Max(board)
+        if xt in (1,2) or yt in (1,2):
+            xt = min(xt, 3-xt)
+            yt = min(yt, 3-yt)
+            return -(xt+yt) * tile
+            
+        snake = ExpectimaxAgent.h17
+        x, y = PATTERN_FOR_SNAKE
+        if xt == 0:
+            if yt == 0:
+                return snake(self,board, x, y)//NORMALIZE # from (0,0)
+            else:
+                return snake(self,board, x, flipping30(y))//NORMALIZE # from (0,3)
+        else:
+            if yt == 0:
+                return snake(self,board, flipping30(x), y)//NORMALIZE # from (3,0)
+            else:
+                return snake(self,board, flipping30(x), flipping30(y))//NORMALIZE # from(3,3)
+        return 0
     
     def h19(self, board):
         ''' specialized gravity - more points for ordinated lines like [64,32,8,0] '''         
@@ -387,8 +412,20 @@ in order to make the heavy tiles get into one side
                 (self.h8(board) * 64)  + \
                 (self.h1(board) * 32))
          
-         
+    def h25(self, board):
+        ''' the third found A* heuristic, including the other heuristics with weights '''
+        return ((self.h10(board) * 32) + \
+                (self.h12(board) * 64)  + \
+                (self.h20(board) * 32) + \
+                (self.h13(board) * 64) + \
+                (self.h8(board) * 16)  + \
+                (self.h1(board) * 64))
         
+    def h26(self, board):
+        ''' the fourth found A* heuristic, including the other heuristics with weights '''
+        return sum(w * h(self,board) for h,w in {h1: 64, h8 : 26, h12:64, h13: 64, h20:42}.items())
+        
+    
 
     def __init__(self, heuristics = None):
         '''
@@ -523,15 +560,46 @@ heuristicsInUse = (h1, h2, h3, h4, h10, h13, h15)
                         h16 : 'h16', 
                         h17 : 'h17', 
                         h18 : 'h18', 
+                        h18a : 'h18a', 
                         h19 : 'h19', 
                         h20 : 'h20', 
                         h21 : 'h21', 
                         h22 : 'h22', 
                         h23 : 'A* first heuristic',
-                        h24 : 'A* second heuristic'
+                        h24 : 'A* second heuristic',
+                        h25 : 'A* third heuristic',
+                        h26 : 'A* fourth heuristic'
                        }
     heuristicsWon4096 = (h1, h8, h10, h12, h13, h20)
     heuristicsWon2048 = (h1, h19)
-    heuristicOK2048   = (h1, h5, h8, h10, h11, h12, h13, h19, h20)
+    heuristicOK2048   = (h1, h5, h8, h10, h11, h12, h13, h18, h19, h20)
     heuristicsWon1024 = (h1, h5, h8, h10, h11, h12, h13, h20)
-    curHeuToCheck     = (h24,)
+    curHeuToCheck     = (h26,) #(h1, h8, h12, h13, h20)
+    curHeuWeights     = {h26 : 1} #{h1: 64, h8 : 26, h12:64, h13: 64, h20:42}
+    
+h1 = ExpectimaxAgent.h1
+h2 = ExpectimaxAgent.h2
+h3 = ExpectimaxAgent.h3
+h4 = ExpectimaxAgent.h4
+h5 = ExpectimaxAgent.h5
+h6 = ExpectimaxAgent.h6
+h7 = ExpectimaxAgent.h7
+h8 = ExpectimaxAgent.h8
+h9 = ExpectimaxAgent.h9
+h10 = ExpectimaxAgent.h10
+h11 = ExpectimaxAgent.h11
+h12 = ExpectimaxAgent.h12
+h13 = ExpectimaxAgent.h13
+h14 = ExpectimaxAgent.h14
+h15 = ExpectimaxAgent.h15
+h16 = ExpectimaxAgent.h16
+h17 = ExpectimaxAgent.h17
+h18 = ExpectimaxAgent.h18
+h19 = ExpectimaxAgent.h19
+h20 = ExpectimaxAgent.h20
+h21 = ExpectimaxAgent.h21
+h22 = ExpectimaxAgent.h22
+h23 = ExpectimaxAgent.h23
+h24 = ExpectimaxAgent.h24
+h25 = ExpectimaxAgent.h25
+h26 = ExpectimaxAgent.h26

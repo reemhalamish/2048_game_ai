@@ -4,6 +4,7 @@ Created on 21 april 2015
 @author: Reem
 '''
 from ai import ExpectimaxAgent
+NAMES = ExpectimaxAgent.heuristicsNames
 
 class DataHandler():
     '''
@@ -56,9 +57,9 @@ class DataHandler():
         for h in heuristics:
             if self.games[h] == 0: continue
             self.getData(h)
-        print("won 1024 game:", {h : self.won1024[h] for h in heuristics if self.won1024[h] > 0})
-        print("won 2048 game:", {h : self.won2048[h] for h in heuristics if self.won2048[h] > 0})
-        print("won 4096 game:", {h : self.won4096[h] for h in heuristics if self.won4096[h] > 0})
+        print("won 1024 game:", {NAMES[h] : self.won1024[h] for h in heuristics if self.won1024[h] > 0})
+        print("won 2048 game:", {NAMES[h] : self.won2048[h] for h in heuristics if self.won2048[h] > 0})
+        print("won 4096 game:", {NAMES[h] : self.won4096[h] for h in heuristics if self.won4096[h] > 0})
     
     def toFile(self):
         f = open("dataAboutHeuristics.log", "a")
