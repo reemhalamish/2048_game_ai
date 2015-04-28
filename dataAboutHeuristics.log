@@ -4432,3 +4432,718 @@ total winning 1024:0
 won 1024 game: {}
 won 2048 game: {}
 won 4096 game: {}
+for heuristic: <function ExpectimaxAgent.h1 at 0x0227EFA8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h2 at 0x02280030>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h3 at 0x02280078>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h4 at 0x022800C0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h5 at 0x02280108>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h6 at 0x02280150>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h7 at 0x02280198>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h8 at 0x022801E0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h9 at 0x02280228>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h10 at 0x02280270>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h11 at 0x022802B8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h12 at 0x02280300>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h13 at 0x02280348>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h14 at 0x02280390>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h15 at 0x022803D8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h18 at 0x022804B0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h19 at 0x02280540>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h20 at 0x02280588>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h21 at 0x022805D0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h22 at 0x02280618>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+won 1024 game: {}
+won 2048 game: {}
+won 4096 game: {}
+for heuristic: <function ExpectimaxAgent.h1 at 0x020C3F60>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h2 at 0x020C3FA8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h3 at 0x020C6030>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h4 at 0x020C6078>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h5 at 0x020C60C0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h6 at 0x020C6108>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h7 at 0x020C6150>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h8 at 0x020C6198>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h9 at 0x020C61E0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h10 at 0x020C6228>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h11 at 0x020C6270>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h12 at 0x020C62B8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h13 at 0x020C6300>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h14 at 0x020C6348>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h15 at 0x020C6390>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h18 at 0x020C6468>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h19 at 0x020C64F8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h20 at 0x020C6540>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h21 at 0x020C6588>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h22 at 0x020C65D0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+won 1024 game: {}
+won 2048 game: {}
+won 4096 game: {}
+for heuristic: <function ExpectimaxAgent.h1 at 0x02073F60>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h2 at 0x02073FA8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h3 at 0x02076030>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h4 at 0x02076078>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h5 at 0x020760C0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h6 at 0x02076108>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h7 at 0x02076150>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h8 at 0x02076198>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h9 at 0x020761E0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h10 at 0x02076228>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h11 at 0x02076270>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h12 at 0x020762B8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h13 at 0x02076300>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h14 at 0x02076348>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h15 at 0x02076390>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h18 at 0x02076468>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h19 at 0x020764F8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h20 at 0x02076540>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h21 at 0x02076588>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h22 at 0x020765D0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+won 1024 game: {}
+won 2048 game: {}
+won 4096 game: {}
+for heuristic: <function ExpectimaxAgent.h1 at 0x02003F60>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h2 at 0x02003FA8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h3 at 0x02006030>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h4 at 0x02006078>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h5 at 0x020060C0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h6 at 0x02006108>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h7 at 0x02006150>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h8 at 0x02006198>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h9 at 0x020061E0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h10 at 0x02006228>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h11 at 0x02006270>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h12 at 0x020062B8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h13 at 0x02006300>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h14 at 0x02006348>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h15 at 0x02006390>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h18 at 0x02006468>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h19 at 0x020064F8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h20 at 0x02006540>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h21 at 0x02006588>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h22 at 0x020065D0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+won 1024 game: {}
+won 2048 game: {}
+won 4096 game: {}
+for heuristic: <function ExpectimaxAgent.h1 at 0x02030F60>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h2 at 0x02030FA8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h3 at 0x02033030>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h4 at 0x02033078>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h5 at 0x020330C0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h6 at 0x02033108>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h7 at 0x02033150>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h8 at 0x02033198>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h9 at 0x020331E0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h10 at 0x02033228>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h11 at 0x02033270>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h12 at 0x020332B8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h13 at 0x02033300>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h14 at 0x02033348>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h15 at 0x02033390>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h18 at 0x02033468>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h19 at 0x020334F8>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h20 at 0x02033540>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h21 at 0x02033588>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+for heuristic: <function ExpectimaxAgent.h22 at 0x020335D0>
+games played:0
+total score:0
+maximum score in one game:0
+total winning 4096:0
+total winning 2048:0
+total winning 1024:0
+won 1024 game: {}
+won 2048 game: {}
+won 4096 game: {}

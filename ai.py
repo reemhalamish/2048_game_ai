@@ -425,6 +425,9 @@ in order to make the heavy tiles get into one side
         ''' the fourth found A* heuristic, including the other heuristics with weights '''
         return sum(w * h(self,board) for h,w in {h1: 64, h8 : 26, h12:64, h13: 64, h20:42}.items())
         
+    def h27(self, board):
+        ''' the fourth found A* heuristic, including the other heuristics with weights '''
+        return sum(w * h(self,board) for h,w in {h1: 74, h8 : 16, h12:64, h13: 84, h20:52}.items())
     
 
     def __init__(self, heuristics = None):
@@ -568,14 +571,15 @@ heuristicsInUse = (h1, h2, h3, h4, h10, h13, h15)
                         h23 : 'A* first heuristic',
                         h24 : 'A* second heuristic',
                         h25 : 'A* third heuristic',
-                        h26 : 'A* fourth heuristic'
+                        h26 : 'A* fourth heuristic',
+                        h27 : 'A* fifth heuristic'
                        }
     heuristicsWon4096 = (h1, h8, h10, h12, h13, h20)
     heuristicsWon2048 = (h1, h19)
     heuristicOK2048   = (h1, h5, h8, h10, h11, h12, h13, h18, h19, h20)
     heuristicsWon1024 = (h1, h5, h8, h10, h11, h12, h13, h20)
-    curHeuToCheck     = (h26,) #(h1, h8, h12, h13, h20)
-    curHeuWeights     = {h26 : 1} #{h1: 64, h8 : 26, h12:64, h13: 64, h20:42}
+    curHeuToCheck     = (h27,) #(h1, h8, h12, h13, h20)
+    curHeuWeights     = {h27 : 3} #{h1: 64, h8 : 26, h12:64, h13: 64, h20:42}
     
 h1 = ExpectimaxAgent.h1
 h2 = ExpectimaxAgent.h2
