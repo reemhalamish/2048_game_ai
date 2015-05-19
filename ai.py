@@ -7,7 +7,7 @@ from miniboard import Miniboard, tileIsInBoundaries
 from time import time
 from game import BOUNDARYS, flipping30
 from random import random
-from turtledemo.forest import randomize
+
 DEPTH = 4
 PATTERN_FOR_SNAKE = ((0,1,2,3,3,2,1,0,0,1,2,3,3,2,1,0), (0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3))
 manhattanDistance = lambda x1,y1,x2,y2 : abs(y2-y1) + abs(x2-x1)
@@ -443,10 +443,11 @@ in order to make the heavy tiles get into one side
     
     def getAction(self, boardWithTiles):
         boardWithInt = Miniboard.convertBoardWithTiles(boardWithTiles)
-#         emptyTiles = Miniboard.countEmptyTiles(boardWithInt)
-#         if emptyTiles > 7:
-#             action, score = self.expectimax(boardWithInt, 1, myTurn = True)
-#         try:
+        moves = list(Miniboard.getNextStatesOfMyTurn(boardWithInt))
+        if not moves:
+            self.debug_heuristics(boardWithInt)
+            print("~~~~")
+
         action, score = self.expectimax(boardWithInt, myTurn = True)    
     
         if self.biggestTile == Miniboard.Max(boardWithInt)[0]:
@@ -454,17 +455,9 @@ in order to make the heavy tiles get into one side
             self.timesForHeuristics = {h : 0 for h in self.heuristicsInUse}
             self.pointsForHeuristics = {h : 0 for h in self.heuristicsInUse}
         
-        if (score == float("-inf")):
-            self.debug_heuristics(boardWithInt)
-            print("~~~~")
+
 
         return action
-#         
-#         except TypeError:
-#             self.debug_heuristics(boardWithInt)
-#             print("************")
-#             return None
-        
         
     def expectimax(self, board, depth = DEPTH, myTurn = False):
         if board == None or depth == 0:
@@ -506,9 +499,9 @@ in order to make the heavy tiles get into one side
     def debug_heuristics(self, board):
         score = self.pointsForHeuristics
         time = self.timesForHeuristics
-        print("biggest tile in the board:", self.biggestTile)
-        for h in self.heuristicsInUse:
-            print("score:", abs(score[h]),"time:", time[h], "name:", h)
+        print("biggest tile in the board:", Miniboard.Max(board)[0])
+#        for h in self.heuristicsInUse:
+#            print("score:", abs(score[h]),"time:", time[h], "name:", h)
         Miniboard.debug_board(board)
 
     def get_heuristics(self):
