@@ -7,7 +7,8 @@ from miniboard import Miniboard, tileIsInBoundaries
 from time import time
 from game import BOUNDARYS, flipping30
 from random import random
-from turtledemo.forest import randomize
+import heapq
+
 DEPTH = 4
 PATTERN_FOR_SNAKE = ((0,1,2,3,3,2,1,0,0,1,2,3,3,2,1,0), (0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3))
 manhattanDistance = lambda x1,y1,x2,y2 : abs(y2-y1) + abs(x2-x1)
@@ -49,6 +50,17 @@ class ExpectimaxAgent:
         tile2 = board[3][3]
         tile3 = board[3][0]
         return max(tile0, tile1, tile2, tile3) * NORMALIZE_2
+
+    def h2a(self, board):
+        ''' try to store the higher numbers in corners - return bonus forthe two best corners '''
+        tile0 = t0 = board[0][0]
+        tile1 = t1 = board[0][3]
+        tile2 = t2 = board[3][3]
+        tile3 = t3 = board[3][0]
+#        print(heapq.nlargest(2, [tile0, tile1, tile2, tile3]))
+#        return sum(heapq.nlargest(2, [tile0, tile1, tile2, tile3]))
+        return max([t0+t1, t0+t3, t1+t2, t3+t2])
+
     def h3(self, board):
         ''' try to store the big tiles close to each other, the further they are the bigger the punishment '''
         biggestTile, x, y = Miniboard.Max(board)
@@ -428,7 +440,44 @@ in order to make the heavy tiles get into one side
     def h27(self, board):
         ''' the fourth found A* heuristic, including the other heuristics with weights '''
         return sum(w * h(self,board) for h,w in {h1: 74, h8 : 16, h12:64, h13: 84, h20:52}.items())
-    
+    def h28(self, board):
+        ''' the fourth found A* heuristic, including the other heuristics with weights '''
+        return sum(w * h(self,board) for h,w in {h1: 74, h8 : 16, h12:90, h13: 60, h20:100, h29:70, h30:500}.items())
+
+    ''' return bonus for every number which is unique in the board.
+    exceptions: if there are two times this number, and they are close (d == 1) '''    
+    def h29(self, board):
+        allTiles = [(board[x][y], x, y) for x in range(4) for y in range(4)]    
+        onlyNumbers = [x[0] for x in allTiles]
+        bonus = sum([x for x in onlyNumbers if x and onlyNumbers.count(x) == 1])
+        doubles = [x for x in allTiles if onlyNumbers.count(x[0]) == 2]
+        for item, x, y in doubles:
+            item2, x2, y2 = [(t,x1,y1) for t,x1,y1 in doubles if (t == item and (x1 != x or y1 != y))][0]
+            if (manhattanDistance(x,y,x2,y2) == 1):
+                bonus += item                
+        return bonus
+
+    ''' returns bonus based on the 4 topmost values - if they are in the same  tur\line '''
+    def h30(self, board):
+        allTiles = [(board[x][y], x, y) for x in range(4) for y in range(4)]    
+        t0, t1, t2, t3 = heapq.nlargest(4, allTiles, lambda x : x[0])
+        b, x, y = t0
+        bonusX = bonusY = b
+        for t in [t1, t2, t3]:
+            if t[1] == x:   bonusX += t[0]
+            if t[2] == y:   bonusY += t[0]
+        x = min(x, 3-x)
+        y = min(y, 3-y)
+        if x!=0: bonusX /= 2
+        if y!=0: bonusY /= 2
+        return max(bonusX, bonusY)
+
+    # TODO: heuristic based on the number of moves left to create the next buggest tile (with relaxation on manDistance)?
+    # it will be have to be at leats worth like biggestTile, and can have reductions based on how far is it from the next goal
+
+
+    # TODO: heuristic that will count "bad blocks" - way hevier then average blocks, or blocks that cannot be moved (more then *4 or less then //4 from all their neighbours)
+    # maybe less penalty for blocks like if aligned
 
     def __init__(self, heuristics = None):
         '''
@@ -454,9 +503,9 @@ in order to make the heavy tiles get into one side
             self.timesForHeuristics = {h : 0 for h in self.heuristicsInUse}
             self.pointsForHeuristics = {h : 0 for h in self.heuristicsInUse}
         
-        if (score == float("-inf")):
+#        if (score == float("-inf")):
+        if len(list( Miniboard.getNextStatesOfMyTurn(boardWithInt))) == 0:
             self.debug_heuristics(boardWithInt)
-            print("~~~~")
 
         return action
 #         
@@ -506,10 +555,13 @@ in order to make the heavy tiles get into one side
     def debug_heuristics(self, board):
         score = self.pointsForHeuristics
         time = self.timesForHeuristics
-        print("biggest tile in the board:", self.biggestTile)
-        for h in self.heuristicsInUse:
-            print("score:", abs(score[h]),"time:", time[h], "name:", h)
-        Miniboard.debug_board(board)
+        biggest, x, y = Miniboard.Max(board)
+        board[x][y] = 0
+        second = Miniboard.Max(board)[0]
+        moreThenHalfWay = "+" if second >= biggest//2 else ""
+        print("biggest tile in the board:", biggest, moreThenHalfWay)
+#        print()
+#        Miniboard.debug_board(board)
 
     def get_heuristics(self):
         return self.heuristicsInUse
@@ -578,11 +630,12 @@ heuristicsInUse = (h1, h2, h3, h4, h10, h13, h15)
     heuristicsWon2048 = (h1, h19)
     heuristicOK2048   = (h1, h5, h8, h10, h11, h12, h13, h18, h19, h20)
     heuristicsWon1024 = (h1, h5, h8, h10, h11, h12, h13, h20)
-    curHeuToCheck     = (h27,) #(h1, h8, h12, h13, h20)
-    curHeuWeights     = {h27 : 3} #{h1: 64, h8 : 26, h12:64, h13: 64, h20:42}
+    curHeuToCheck     = (h28,) #(h1, h8, h12, h13, h20)
+    curHeuWeights     = {h28 : 3} #{h1: 64, h8 : 26, h12:64, h13: 64, h20:42}
     
 h1 = ExpectimaxAgent.h1
 h2 = ExpectimaxAgent.h2
+h2a = ExpectimaxAgent.h2a
 h3 = ExpectimaxAgent.h3
 h4 = ExpectimaxAgent.h4
 h5 = ExpectimaxAgent.h5
@@ -607,3 +660,7 @@ h23 = ExpectimaxAgent.h23
 h24 = ExpectimaxAgent.h24
 h25 = ExpectimaxAgent.h25
 h26 = ExpectimaxAgent.h26
+h27 = ExpectimaxAgent.h27
+h28 = ExpectimaxAgent.h28
+h29 = ExpectimaxAgent.h29
+h30 = ExpectimaxAgent.h30

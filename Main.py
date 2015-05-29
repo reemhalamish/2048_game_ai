@@ -7,11 +7,10 @@ Created on 14 april 2015
 from gui import GUI
 import tkinter
 from ai import ExpectimaxAgent
-from data_handler import DataHandler
 TIMES_TO_CHECK_EVERY_RUN = 3
 MAXIMUM_HEURISTICS_IN_GAME = 4
 
-def runOneTime(dataSaver, heuristics = None):
+def runOneTime(dataSaver=None, heuristics = None):
     Agent = ExpectimaxAgent(heuristics)
     root = tkinter.Tk()
     root.title("2048")
@@ -34,20 +33,10 @@ def recuresiveRun(heuIndex, heuByNow, dataSaver):
     newHeuList.append(heuristicsToCheck[heuIndex])
     recuresiveRun(heuIndex+1, newHeuList, dataSaver)
     
-    
-    
-        
-
-def main():
-    dataSaver = DataHandler()
-    recuresiveRun(0,[],dataSaver)
-    dataSaver.printAllInfo()
 
 if __name__ == '__main__':
-#     for i in range(10):
-        dataSaver = DataHandler()
-        runOneTime(dataSaver)
-        dataSaver.printAllInfo()
+    for i in range(10):
+        runOneTime()
         
     
     

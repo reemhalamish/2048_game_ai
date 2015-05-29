@@ -42,7 +42,7 @@ class Tile():
         x,y = Tile.convertXYinBoardToXYinCanvas(x,y)
         
         picturePath = path_for_images[self.value]
-        self.image = ImageTk.PhotoImage(file = picturePath)
+        self.image = PhotoImage(file = picturePath)
         self.image_in_canvas = self.canvas.create_image(x,y, image=self.image)
     def erase(self):
         self.canvas.delete(self.image_in_canvas)
