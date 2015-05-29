@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''
 Created on 14 april 2015
 
@@ -7,10 +8,18 @@ Created on 14 april 2015
 from gui import GUI
 import tkinter
 from ai import ExpectimaxAgent
+<<<<<<< HEAD
 TIMES_TO_CHECK_EVERY_RUN = 3
 MAXIMUM_HEURISTICS_IN_GAME = 4
 
 def runOneTime(dataSaver=None, heuristics = None):
+=======
+# from data_handler import DataHandler
+TIMES_TO_CHECK_EVERY_RUN = 3
+MAXIMUM_HEURISTICS_IN_GAME = 4
+
+def runOneTime(dataSaver = None, heuristics = None):
+>>>>>>> 38e04231fa45a38d435d5a5ea8c41da3766d8179
     Agent = ExpectimaxAgent(heuristics)
     root = tkinter.Tk()
     root.title("2048")
@@ -35,8 +44,15 @@ def recuresiveRun(heuIndex, heuByNow, dataSaver):
     
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     for i in range(10):
         runOneTime()
+=======
+#     for i in range(10):
+#        dataSaver = DataHandler()
+        runOneTime()
+#        dataSaver.printAllInfo()
+>>>>>>> 38e04231fa45a38d435d5a5ea8c41da3766d8179
         
     
     

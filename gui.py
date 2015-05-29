@@ -222,7 +222,7 @@ class GUI(Frame):
     def display_score_and_exit(self):
 #         print("Game over! your score:",self.score)
 #         print("you have about 10 seconds to review the game")
-        TEN_SEC_UNTIL_EXIT = 1000 
+        TEN_SEC_UNTIL_EXIT = 10000 
         self.after(TEN_SEC_UNTIL_EXIT, self.exit_fast)
     
     def exit_fast(self):
